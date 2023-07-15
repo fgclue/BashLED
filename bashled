@@ -1,0 +1,25 @@
+#!/bin/bash
+
+  ###########
+  # bashLED #
+  ###########
+
+BLVER="1.0"
+PNAME="BashLED"
+
+if [[ $1 == "" ]]
+then
+  echo -e "\e[0;94musage\e[0m: \e[0;92m$0 \e[0madd\e[0;94m/\e[0mremove\e[0;94m/\e[0medit\e[0;94m/\e[0mplay                "
+  echo -e "  \e[0;94madd\e[0m: Add file to playlist.                  "
+  echo -e "  \e[0;94mremove\e[0m: Remove a file from the playlist.    "
+  echo -e "  \e[0;94medit\e[0m: Open playlist in a text editor.       "
+  echo -e "  \e[0;94mplay\e[0m: Play the playlist.                    "
+  echo -e "  \e[0;94minit\e[0m: Create a BashLED playlist.            "
+  echo -e "                                                           "
+  echo -e "\e[0;92m$PNAME \e[0;92m$BLVER \e[0mby \e[0;93mfgclue\e[0m. email: \e[0;93mlost\e[0m@\e[0;93mbiitle.nl\e[0m"
+fi
+
+if [[ $1 == "init" ]]
+then
+  echo "Creating BashLED Playlist..."
+fi
