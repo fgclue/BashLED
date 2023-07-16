@@ -9,9 +9,7 @@ PNAME="BashLED"
 
 if [[ $1 == "" ]]
 then
-  echo -e "\e[0;94musage\e[0m: \e[0;92m$0 \e[0madd\e[0;94m/\e[0mremove\e[0;94m/\e[0medit\e[0;94m/\e[0mplay                "
-  echo -e "  \e[0;94madd\e[0m: Add file to playlist.                  "
-  echo -e "  \e[0;94mremove\e[0m: Remove a file from the playlist.    "
+  echo -e "\e[0;94musage\e[0m: \e[0;92m$0 \e[0medit\e[0;94m/\e[0mplay\e[0;94m/\e[0minit playlistName"
   echo -e "  \e[0;94medit\e[0m: Open playlist in a text editor.       "
   echo -e "  \e[0;94mplay\e[0m: Play the playlist.                    "
   echo -e "  \e[0;94minit\e[0m: Create a BashLED playlist.            "
@@ -21,5 +19,49 @@ fi
 
 if [[ $1 == "init" ]]
 then
-  echo "Creating BashLED Playlist..."
+  if [[ $2 == "" ]]
+  then
+    echo "Playlist name not provided."
+  fi
+  echo "Creating playlist..."
+  mkdir -p ~/.local/share/bashled
+  mkdir -p ~/.local/share/bashled/$2
+  mkdir -p ~/.local/share/bashled/$2/files
+  touch ~/.local/share/bashled/$2/playlist
+  echo "# BashLED Playlist file" >> ~/.local/share/bashled/$2/playlist
+  echo "# How to add files:" >> ~/.local/share/bashled/$2/playlist
+  echo "# Add a line that starts with mpv, then the file name." >> ~/.local/share/bashled/$2/playlist
+  echo "# Example: mpv file.mp4" >> ~/.local/share/bashled/$2/playlist
+  echo "Playlist created at ~/.local/share/bashled/$2."
+fi
+if [[ $1 == "edit" ]]
+then
+  if [[ $2 == "" ]]
+  then
+    echo "Error: You need to enter a playlist name."
+    exit
+  fi
+  if [[ -e "~/.local/share/bashled/$2/" ]]
+  then
+    $EDITOR ~/.local/share/bashled/$2
+  else
+    echo "Error: No playlist called $2 exists."
+  fi
+fi
+if [[ $1 == "play" ]]
+then
+  if [[ $2 == "" ]]
+  then
+    echo "Error: You need to enter a playlist name."
+    exit
+  fi
+  if [[ -e "~/.local/share/bashled/$2/" ]]
+  then
+    cd ~/.local/bashled/$2/
+    chmod a+xrw playlist
+    cd files
+    ../playlist
+  else
+    echo "Error: No playlist called $2 exists."
+  fi
 fi
